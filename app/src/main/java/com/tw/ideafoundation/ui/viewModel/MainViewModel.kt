@@ -1,25 +1,22 @@
 package com.tw.ideafoundation.ui.viewModel
 
-import android.app.Activity
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tw.ideafoundation.service.APIInterface
 import com.tw.ideafoundation.service.RetrofitBase
+import com.tw.ideafoundation.ui.main.AdapterMain
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class MainViewModel constructor(private val activity: Activity) : ViewModel() {
+class MainViewModel : ViewModel() {
 
-
-    val String = MutableLiveData<String>()
     val token = MutableLiveData<String>()
 
-    //val adapterMain: AdapterMain
+    val adapterMain: AdapterMain
 
     init {
-        //adapterMain = AdapterMain()
+        adapterMain = AdapterMain()
     }
 
     fun getItemList() = viewModelScope.launch {
@@ -28,20 +25,23 @@ class MainViewModel constructor(private val activity: Activity) : ViewModel() {
         val userList = RetrofitBase.getInstance().create(APIInterface::class.java)
         val param = HashMap<String, String>()
         param["USER_ID"] = "userId"
-        val result = userList.getLogin(param)
+        val result = userList.getList("param")
         if (result.body() != null) {
-//            addNotes(result.body()!!)
-//            adapterMain.setData(note)
+            //adapterMain.setData(token)
         }
     }
 
-    fun login() = viewModelScope.launch {
-
+    fun login(phoneNumber: String, password: String) = viewModelScope.launch {
         Dispatchers.IO
         val userList = RetrofitBase.getInstance().create(APIInterface::class.java)
         val param = HashMap<String, String>()
-        param["USER_ID"] = "userId"
-        val result = userList.getList("param")
+        param["phone_number"] = "phoneNumber"
+        param["password"] = "password"
+        param["device_type"] = "device_type"
+        param["device_token"] = "fo-duKT9S_ODEfNV6_azbs%3AAPA91bHm1y0CIKo-" +
+                "uWhHrNp74svxLvLmBRzSEQ3JzCQXljV30WN4DiDV43oPoUvgzHBF9BcducrcasGUJOq" +
+                "o9ry1SzNSn3x9b0w1kk2tPPpfNlt5odPTwIATzEeEDrvk065104NS6xJ"
+        val result = userList.getLogin(param)
         if (result.body() != null) {
             token.value = result.body()
         }
