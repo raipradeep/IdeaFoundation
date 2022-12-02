@@ -12,6 +12,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         super.onCreate(savedInstanceState)
         binding.mainData = viewModel
         binding.lifecycleOwner = this
+        viewModel.loadLatLng.value = "load"
     }
 
     override fun getLayout(): Int {

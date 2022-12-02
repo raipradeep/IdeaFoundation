@@ -9,5 +9,8 @@ interface APIInterface {
     suspend fun getLogin(@HeaderMap headers: Map<String, String>): Response<String>
 
     @GET("user")
-    suspend fun getList(@Header("Authorization") authorization: String): Response<String>
+    suspend fun getList(
+        @Header("Authorization") authorization: String,
+        @Query("lat") late: String, @Query("long") long: String
+    ): Response<String>
 }

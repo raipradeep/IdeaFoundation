@@ -19,7 +19,7 @@ class AdapterMain : RecyclerView.Adapter<AdapterMain.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.txv_title.setText("Hello There")
+        holder.txv_title.text = "Hello There"
     }
 
     override fun getItemCount(): Int {
