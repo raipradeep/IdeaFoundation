@@ -1,18 +1,23 @@
 package com.tw.ideafoundation.ui.projectUI
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.text.HtmlCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.tw.ideafoundation.R
 import com.tw.ideafoundation.data.UserProjectsItem
+import com.tw.ideafoundation.ui.main.MainActivity
 
 
 class AdapterProject : RecyclerView.Adapter<AdapterProject.ViewHolder>() {
     var list: MutableList<UserProjectsItem> = ArrayList()
+    lateinit var content: Context
 
     fun setData(projectList: List<UserProjectsItem>) {
         this.list = projectList as MutableList<UserProjectsItem>
@@ -22,6 +27,7 @@ class AdapterProject : RecyclerView.Adapter<AdapterProject.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_project, parent, false)
+        content = parent.context
         return ViewHolder(view)
     }
 
@@ -61,6 +67,13 @@ class AdapterProject : RecyclerView.Adapter<AdapterProject.ViewHolder>() {
             holder.txt_description.visibility = View.GONE
         }
 
+        holder.llMain.setOnClickListener {
+            val pid = list[position].projectHours.projectId
+            val intent = Intent(content, MainActivity::class.java)
+            intent.putExtra("pId", pid)
+            content.startActivity(intent)
+        }
+
 
     }
 
@@ -73,12 +86,14 @@ class AdapterProject : RecyclerView.Adapter<AdapterProject.ViewHolder>() {
         var txt_project_cost: TextView
         var txt_status: TextView
         var txt_description: TextView
+        var llMain: LinearLayout
 
         init {
             txt_title = itemView.findViewById(R.id.txtTitle)
             txt_project_cost = itemView.findViewById(R.id.txt_project_cost)
             txt_status = itemView.findViewById(R.id.txt_status)
             txt_description = itemView.findViewById(R.id.txt_description)
+            llMain = itemView.findViewById(R.id.llMain)
         }
 
     }

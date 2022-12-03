@@ -6,12 +6,17 @@ import com.tw.ideafoundation.R
 import com.tw.ideafoundation.databinding.ActivityMainBinding
 import com.tw.ideafoundation.ui.viewModel.MainViewModel
 
+
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.mainData = viewModel
         binding.lifecycleOwner = this
+        val pId = intent.extras!!.getString("pId")
+
+        viewModel.getItemList(pId.toString())
+
     }
 
     override fun getLayout(): Int {

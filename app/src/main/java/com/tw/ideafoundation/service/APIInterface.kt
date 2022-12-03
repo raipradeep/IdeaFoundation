@@ -9,9 +9,8 @@ interface APIInterface {
     @GET("getUserAssignedProjects")
     suspend fun getUserAssignmentProject(@HeaderMap headers: Map<String, String>): Response<ProjectData>
 
-    @GET("getUserAssignedProjects")
+    @GET("ddoctemplate/2854")
     suspend fun getList(
         @Header("Authorization") authorization: String,
-        @Query("lat") late: String, @Query("long") long: String
-    ): Response<String>
+        @Query("pid") late: String): Response<String>
 }

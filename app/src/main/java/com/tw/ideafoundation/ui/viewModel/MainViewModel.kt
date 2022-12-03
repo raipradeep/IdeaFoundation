@@ -1,6 +1,7 @@
 package com.tw.ideafoundation.ui.viewModel
 
 import android.app.Activity
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -18,20 +19,22 @@ class MainViewModel(val activity: Activity) : ViewModel() {
     val adapterMain: AdapterMain = AdapterMain()
     val adapterProject: AdapterProject = AdapterProject()
     val activityd: Activity
+    var tokenddoc: String = ""
 
     init {
         activityd = Activity()
     }
 
-    fun getItemList() = viewModelScope.launch {
+    fun getItemList(pid: String) = viewModelScope.launch {
 
         Dispatchers.IO
         val userList = RetrofitBase.getInstance().create(APIInterface::class.java)
         val param = HashMap<String, String>()
-        param["USER_ID"] = "userId"
-        val result = userList.getList("param", "", "")
+        param["pid"] = "userId"
+        val result = userList.getList(tokenddoc, pid)
         if (result.body() != null) {
             //adapterMain.setData(token)
+            Log.e("TAG", "get Doc list: " + result.body())
         }
     }
 
@@ -44,6 +47,7 @@ class MainViewModel(val activity: Activity) : ViewModel() {
         val result = userList.getUserAssignmentProject(param)
         if (result.body() != null) {
             val projectData = result.body()!!.data
+            tokenddoc = result.body()!!.authToken
 
             adapterProject.setData(projectData.userProjects!!)
 
