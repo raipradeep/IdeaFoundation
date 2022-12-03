@@ -13,46 +13,17 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        tools:context=".ui.loginUI.LoginActivity">
+        android:background="@color/white"
+        tools:context=".ui.projectUI.ProjectUIActivity">
 
 
-        <EditText
-            android:id="@+id/edt_phoneNumber"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewProject"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:background="@drawable/background_edittext"
-            android:hint="Phone Number"
-            android:inputType="phone"
-            android:maxLength="10"
-            android:padding="5dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <EditText
-            android:id="@+id/edt_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:background="@drawable/background_edittext"
-            android:hint="Password"
-            android:padding="5dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edt_phoneNumber" />
-
-        <Button
-            android:id="@+id/btnSubmit"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:text="Submit"
-            android:textColor="@color/white"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edt_password" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

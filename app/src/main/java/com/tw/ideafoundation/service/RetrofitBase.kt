@@ -4,7 +4,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitBase {
-    private const val baseUrl = "http://dcltr.oidea.xyz/api/"
+    private const val baseUrl = "https://development-mobile.builderstorm.com/mobileapp/"
 
     fun getInstance(): Retrofit {
         return Retrofit.Builder().baseUrl(baseUrl)

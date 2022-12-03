@@ -1,20 +1,27 @@
 package com.tw.ideafoundation.ui.viewModel
 
+import android.app.Activity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.tw.ideafoundation.R
+import com.tw.ideafoundation.data.ProjectData
 import com.tw.ideafoundation.service.APIInterface
 import com.tw.ideafoundation.service.RetrofitBase
 import com.tw.ideafoundation.ui.main.AdapterMain
+import com.tw.ideafoundation.ui.projectUI.AdapterProject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class MainViewModel : ViewModel() {
+class MainViewModel(val activity: Activity) : ViewModel() {
 
-    val token = MutableLiveData<String>()
-    var loadLatLng = MutableLiveData<String>()
+    val adapterMain: AdapterMain = AdapterMain()
+    val adapterProject: AdapterProject = AdapterProject()
+    val activityd: Activity
 
-    private val adapterMain: AdapterMain = AdapterMain()
+    init {
+        activityd = Activity()
+    }
 
     fun getItemList() = viewModelScope.launch {
 
@@ -22,23 +29,24 @@ class MainViewModel : ViewModel() {
         val userList = RetrofitBase.getInstance().create(APIInterface::class.java)
         val param = HashMap<String, String>()
         param["USER_ID"] = "userId"
-        val result = userList.getList("param","","")
+        val result = userList.getList("param", "", "")
         if (result.body() != null) {
             //adapterMain.setData(token)
         }
     }
 
-    fun login(phoneNumber: String, password: String) = viewModelScope.launch {
+    fun getProjectList() = viewModelScope.launch {
         Dispatchers.IO
         val userList = RetrofitBase.getInstance().create(APIInterface::class.java)
         val param = HashMap<String, String>()
-        param["phone_number"] = "phoneNumber"
-        param["password"] = "password"
-        param["device_type"] = "device_type"
-        param["device_token"] = "fo-duKT9S_ODEfNV6_azbs%3AAPA91bHm1y0CIKo-uWhHrNp74svxLvLmBRzSEQ3JzCQXljV30WN4DiDV43oPoUvgzHBF9BcducrcasGUJOqo9ry1SzNSn3x9b0w1kk2tPPpfNlt5odPTwIATzEeEDrvk065104NS6xJ"
-        val result = userList.getLogin(param)
+        param["authtoken"] =
+            "eyJ0eXBlIjoiQlMiLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzaXRlaWQiOiJkbFZQV0V0aEwzcG1SMkpFUVc1NFpsYzJaREpSWnowOSIsImRldmljZW5vIjoiWm1OQmVtOTZVVEJNT0RWc1NqSmhSRFl4V0c4dlppc3hTSEJNVjI5NE1FZEtjblpzYlZaTGVrNWFPRDA9IiwiY2xpZW50bmFtZSI6ImF6RXZOU3Q0VG1aSk1rTTBSR1V5ZUVKMk1GUkJUakZTWnpsMVNubGhNRUphTlZWdk9HczVlVko2T0QwPSIsInVzZXJpZCI6IlJuUnhhbVI0U1hkUVdrdElja1ZMVWt0eVMyRjBRVDA5In0.Fg5JbggGjDSqu4L3xlD7XofiKCnOon_MlCeRzU1UWQI"
+        val result = userList.getUserAssignmentProject(param)
         if (result.body() != null) {
-            token.value = result.body()
+            val projectData = result.body()!!.data
+
+            adapterProject.setData(projectData.userProjects!!)
+
         }
     }
 }
